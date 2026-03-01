@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <h2>Edit Post</h2>
+        <form action="" method="post" novalidate class="shadow-sm p-4 bg-white rounded">
+            {{ form.hidden_tag() }}
+            <div class="mb-3">
+                {{ form.title.label(class='form-label fw-bold') }}
+                {{ form.title(size=64, class='form-control') }}
+                {% for error in form.title.errors %}
+                <span class="text-danger">[{{ error }}]</span>
+                {% endfor %}
+            </div>
+            <div class="mb-3">
+                {{ form.content.label(class='form-label fw-bold') }}
+                {{ form.content(rows=10, class='form-control') }}
+                {% for error in form.content.errors %}
+                <span class="text-danger">[{{ error }}]</span>
+                {% endfor %}
+            </div>
+            <div class="mb-3 form-check">
+                {{ form.published(class='form-check-input') }}
+                {{ form.published.label(class='form-check-label') }}
+            </div>
+            <div class="mt-4">
+                {{ form.submit(class='btn btn-primary px-4') }}
+                <a href="{{ url_for('posts.view', id=request.view_args['id']) }}"
+                    class="btn btn-outline-secondary ms-2">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

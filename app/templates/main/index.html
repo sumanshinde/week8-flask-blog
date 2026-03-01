@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="px-4 py-3 my-3 text-center">
+    <h1 class="display-5 fw-bold">Welcome to My Blog</h1>
+    <div class="col-lg-6 mx-auto">
+        <p class="lead mb-4">Exploring thoughts and sharing experiences.</p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+        <h3 class="pb-4 mb-4 fst-italic border-bottom">Latest Posts</h3>
+        {% for post in posts %}
+        <article class="blog-post mb-4 shadow-sm p-4 bg-white rounded">
+            <h2 class="blog-post-title"><a href="{{ url_for('posts.view', id=post.id) }}"
+                    class="text-decoration-none text-dark">{{ post.title }}</a></h2>
+            <p class="blog-post-meta text-muted">{{ post.timestamp.strftime('%Y-%m-%d %H:%M') }} by <a
+                    href="{{ url_for('main.profile', username=post.author.username) }}">{{ post.author.username }}</a>
+            </p>
+            <p>{{ post.content[:200] }}...</p>
+            <a href="{{ url_for('posts.view', id=post.id) }}" class="btn btn-outline-primary btn-sm">Read More</a>
+        </article>
+        {% endfor %}
+
+        <nav aria-label="Pagination">
+            <ul class="pagination mt-4">
+                <li class="page-item {% if not pagination.has_prev %}disabled{% endif %}">
+                    <a class="page-link" href="{{ url_for('main.index', page=pagination.prev_num) }}">Previous</a>
+                </li>
+                <li class="page-item {% if not pagination.has_next %}disabled{% endif %}">
+                    <a class="page-link" href="{{ url_for('main.index', page=pagination.next_num) }}">Next</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <div class="col-md-4">
+        <div class="position-sticky" style="top: 2rem;">
+            <div class="p-4 mb-3 bg-light rounded shadow-sm">
+                <h4 class="fst-italic">About</h4>
+                <p class="mb-0">This is my personal blog where I share tutorials, stories, and thoughts on life and
+                    technology.</p>
+            </div>
+
+            <div class="p-4 bg-light rounded shadow-sm">
+                <h4 class="fst-italic">Elsewhere</h4>
+                <ol class="list-unstyled">
+                    <li><a href="#" class="text-decoration-none">GitHub</a></li>
+                    <li><a href="#" class="text-decoration-none">Twitter</a></li>
+                    <li><a href="#" class="text-decoration-none">LinkedIn</a></li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
